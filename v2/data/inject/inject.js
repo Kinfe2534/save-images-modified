@@ -13,6 +13,14 @@ $(window).on('load', function() {
   console.log("fully loaded from contenet");
   //injectWraper();
  });
+ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
+   if(request.message=="open_save_images"){console.log("message save images")}
+   else if(request.message =="open_new_url"){
+     console.log("message is open new url")
+    window.open(`${request.url}`,"_self")
+    }
+   else(console.log("unidentified message"))
+ });
 function injectWraper() {
   'use strict';
   // remove the old iframe

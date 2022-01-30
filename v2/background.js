@@ -18,17 +18,16 @@ const notify = message => chrome.storage.local.get({
   iconUrl: '/data/icons/48.png'
 }));
 
-const onClicked = tab => {
-  chrome.tabs.executeScript(tab.id, {
-    file: 'window_open.js',
-    runAt: 'document_start',
-    allFrames: false
-  }, () => {
-    if (chrome.runtime.lastError) {
-      notify('Cannot collect images on this tab\n\n' + chrome.runtime.lastError.message);
-    }
-  });
-};
+ function onClicked(tab){
+
+    chrome.tabs.query({active:true,currentWindow:true},function(tabs){
+        chrome.tabs.sendMessage(tabs[0].id,{message:"open_save_images"},function(response){});
+      var  urls=["htttps://www.amazon.com","htttps://www.upwork.com","https://www.mozilla.com"];
+      for(let i=0;i<urls.length;i++)
+        setTimeout(()=>{chrome.tabs.sendMessage(tabs[0].id,{message:"open_new_url",url:urls[i]},function(response){});},10000*i);
+    });
+}
+ 
 chrome.browserAction.onClicked.addListener(onClicked);
 
 chrome.runtime.onMessage.addListener((request, sender) => {

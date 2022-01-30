@@ -43,5 +43,14 @@
   "options_ui": {
     "page": "data/options/index.html",
     "chrome_style": true
-  }
+  },
+  "content_scripts": [
+		{
+		  "js": ["jquery.js","data/inject/inject.js"],
+		  "matches": ["<all_urls>"],
+		  "match_about_blank": true,
+		  "all_frames": false,
+		  "run_at": "document_end"
+		}
+	  ]
 }

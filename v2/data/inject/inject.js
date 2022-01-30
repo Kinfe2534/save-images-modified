@@ -8,16 +8,11 @@
  * GitHub: https://github.com/belaviyo/save-images/ */
 
 //injectWraper();
-setTimeout(function(){
-  window.open("https://www.upwork.com","_self");
-  console.log("injected script test from upwork");
-  injectWraper();
-},5000);
-setTimeout(function(){
-  window.open("https://www.amazon.com","_self");
-  console.log("injected script test from amazon");
-  injectWraper();
-},30000);
+$(window).on('load', function() {
+  // code here
+  console.log("fully loaded from contenet");
+  //injectWraper();
+ });
 function injectWraper() {
   'use strict';
   // remove the old iframe
@@ -36,7 +31,6 @@ function injectWraper() {
       }
     };
     const onmessage = (request, sender, response) => {
-      console.log("TEST inside inject on messsage TEST");
       if (request.cmd === 'close-me') {
         close();
       }

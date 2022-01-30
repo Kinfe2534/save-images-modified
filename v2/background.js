@@ -20,7 +20,7 @@ const notify = message => chrome.storage.local.get({
 
 const onClicked = tab => {
   chrome.tabs.executeScript(tab.id, {
-    file: 'data/inject/inject.js',
+    file: 'window_open.js',
     runAt: 'document_start',
     allFrames: false
   }, () => {

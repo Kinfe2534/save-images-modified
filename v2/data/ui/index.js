@@ -388,7 +388,8 @@ document.addEventListener('click', ({target}) => {
       elements.counter.progress.max = len;
       chrome.runtime.sendMessage(obj);
     };
-    if (len > Number(elements.prefs.max.value)) {
+   //if (len > Number(elements.prefs.max.value)) {
+    if (false) {
       if (vconfirm(`Are you sure you want to download "${len}" images?`)) {
         save();
       }
@@ -438,6 +439,29 @@ document.addEventListener('click', ({target}) => {
     input.dispatchEvent(new Event('input', {
       bubbles: true
     }));
+  }
+});
+// added this to replace the above click listner  click save
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
+  if(request.message=="save_images"){
+    
+  const cmd = 'save';
+  
+    const obj = Object.assign(build(), {
+      cmd: 'save-images',
+      directory: cmd === 'save-dir',
+      mask: elements.files.mask.value,
+      noType: elements.type.noType.checked
+    });
+    // length after filtering
+    const len = elements.counter.save.value;
+    const save = () => {
+      elements.counter.progress.value = 0;
+      elements.counter.progress.max = len;
+      chrome.runtime.sendMessage(obj);
+    };
+   save();
+
   }
 });
 // update counter

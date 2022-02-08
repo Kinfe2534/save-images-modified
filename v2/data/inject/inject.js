@@ -10,16 +10,24 @@
 //injectWraper();
 $(window).on('load', function() {
   // code here
+ 
   console.log("fully loaded from contenet");
+  setTimeout(()=>{
+    chrome.runtime.sendMessage({message: "window_loaded"}, function(response) {
+  
+    });
+
+  },3000);
+  
   //injectWraper();
  });
  chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
-   if(request.message=="open_save_images"){console.log("message save images")}
-   else if(request.message =="open_new_url"){
-     console.log("message is open new url")
-    window.open(`${request.url}`,"_self")
-    }
-   else(console.log("unidentified message"))
+       if(request.message=="open_save_images_config"){console.log("message save images config");injectWraper();}
+  else if(request.message=="open_new_url"){console.log("message is open new url"); console.log(request.url); window.open(`${request.url}`,"_self"); }
+  else if(request.message==""){console.log("message is window loaded")}
+   else if(request.message==""){}
+   
+   
  });
 function injectWraper() {
   'use strict';
@@ -110,4 +118,3 @@ function injectWraper() {
     document.body.appendChild(window.iframe);
   });
 }
-

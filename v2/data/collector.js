@@ -234,7 +234,14 @@ var collector = {
           cmd: 'images',
           images: [].concat([], ...images),
           index: slice.length
-        })).catch(e => console.error(e));
+        })).finally(()=>{
+          console.log(`images length =${images.length }+ and index +${i}+ and slice plus index+${slice.length + i}`);
+          if((i+slice.length)==(images.length)){console.log("finallly out"); 
+          setTimeout(()=>{
+          chrome.runtime.sendMessage({message: "scan_completed"}, function(response) {  
+          });
+          },2000);    }
+        }).catch(e => console.error(e));
     }
   }
 };
